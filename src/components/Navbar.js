@@ -39,7 +39,7 @@ export default function Navbar() {
 
           {/* Apply Now + Hamburger */}
           <div className="flex items-center gap-4">
-            <a href="https://wa.me/2349125771177" target="_blank" rel="noopener noreferrer"
+            <a href="/auth/signup" rel="noopener noreferrer"
               className="hidden sm:flex bg-[#137fec] text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-[#137fec]/90 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#137fec]/30 no-underline">
               Apply Now
             </a>
@@ -66,7 +66,7 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a href="https://wa.me/2349125771177" target="_blank" rel="noopener noreferrer"
+          <a href="/auth/signup"
             onClick={() => setMenuOpen(false)}
             className="mt-3 bg-[#137fec] text-white text-[15px] font-bold px-5 py-3 rounded-lg no-underline text-center hover:bg-[#137fec]/90 transition-all duration-300 hover:scale-[1.02]">
             Apply Now

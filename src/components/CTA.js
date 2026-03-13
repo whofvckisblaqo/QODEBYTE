@@ -25,7 +25,7 @@ export default function CTA() {
           Next cohort starts in 14 days. Limited seats available.
         </p>
         <div className={`flex flex-col sm:flex-row justify-center gap-4 transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <a href="https://wa.me/2349125771177" target="_blank" rel="noopener noreferrer"
+          <a href="/auth/signup"
             className="bg-[#137fec] text-white px-10 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-[#137fec]/30 hover:scale-[1.02] hover:brightness-95 transition-all duration-300 no-underline">
             Apply for Admission
           </a>

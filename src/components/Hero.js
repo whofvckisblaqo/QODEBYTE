@@ -31,7 +31,7 @@ export default function Hero() {
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/2349125771177" target="_blank" rel="noopener noreferrer"
+              <a href="/auth/signup"
                 className="bg-[#137fec] text-white px-8 py-4 rounded-lg font-bold shadow-lg shadow-[#137fec]/20 hover:scale-[1.02] hover:brightness-95 transition-all duration-300 no-underline">
                 👉 Apply Now
               </a>
