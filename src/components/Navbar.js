@@ -26,8 +26,17 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
 
           {/* Logo */}
-          <a href="#home" className="flex items-center group">
-            <span className="text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-[#137fec]">Qodebyte Academy</span>
+          <a href="#home" className="flex items-center gap-2.5 group">
+            <img
+              src="/qodebyte-logo.png"
+              alt="Qodebyte Academy Logo"
+              width={38}
+              height={38}
+              className="object-contain"
+            />
+            <span className="text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-[#137fec]">
+              Qodebyte Academy
+            </span>
           </a>
 
           {/* Desktop menu */}

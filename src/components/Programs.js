@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 const programs = [
-  { icon: "code",     title: "Fullstack Development", description: "Build end-to-end web applications using modern frameworks like React and Node.js." },
-  { icon: "palette",  title: "UI/UX Design",          description: "Master user research, wireframing, and interactive prototyping with Figma." },
-  { icon: "brush",    title: "Creative Design",        description: "Digital illustration, branding, and motion graphics for modern brands." },
-  { icon: "computer", title: "Basic Computer",         description: "Foundational digital literacy for absolute beginners entering the tech world." },
+  { icon: "code",     title: "Fullstack Development", description: "Build end-to-end web applications using modern frameworks like React and Node.js.", href: "/courses/fullstack" },
+  { icon: "palette",  title: "UI/UX Design",          description: "Master user research, wireframing, and interactive prototyping with Figma.", href: "/courses/uiux" },
+  { icon: "brush",    title: "Creative Design",        description: "Digital illustration, branding, and motion graphics for modern brands.", href: "/courses/creative" },
+  { icon: "computer", title: "Basic Computer",         description: "Foundational digital literacy for absolute beginners entering the tech world.", href: "/courses/basic-computer" },
 ];
 
 export default function Programs() {
@@ -40,9 +41,9 @@ export default function Programs() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{program.title}</h3>
                 <p className="text-sm text-slate-500 mb-6">{program.description}</p>
-                <a href="#" className="text-[#137fec] text-sm font-bold flex items-center gap-1 hover:gap-3 transition-all duration-300 no-underline">
+                <Link href={program.href} className="text-[#137fec] text-sm font-bold flex items-center gap-1 hover:gap-3 transition-all duration-300 no-underline">
                   Learn More <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
+                </Link>
               </div>
             </div>
           ))}

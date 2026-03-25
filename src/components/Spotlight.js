@@ -8,6 +8,39 @@ const videos = [
   { title: "The Qodebyte Classroom Experience", description: "Get a sneak peek into our high-energy classroom sessions, peer-to-peer coding jams, and weekly project demos.", link: "Take a Peek", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuALiineSal9NDStqVv_TontBUGsMO_dbJIcwbkbrmjjakHW5CGvJ3SXTxLmp_W_T3SxV2lIu5xX-MiMgLk2N2A04uS8QMfwvAqwJeh0M4mmQjusD_uhnsglnCY2iWKjWr51ih1ZFcKXyi0DhB2akgTkFU3PAyq96ZDLzNAX-9xmGlfaHte6Xe7XnAdnF5TcuHlo-IkWfYDmQIIpiGpdFoVAcqjntEn5yfYBC-3tblEYjf8bqNz3TOC8haScGhuXiNhskzHEJMs4RmEs" },
 ];
 
+// Triple the cards so the marquee loops seamlessly
+const marqueeVideos = [...videos, ...videos, ...videos];
+
+function SpotlightCard({ video }) {
+  return (
+    <div className="group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex-shrink-0 w-72">
+      <div className="h-2 w-full bg-gradient-to-r from-[#137fec] to-blue-600" />
+      <div className="relative aspect-video overflow-hidden cursor-pointer">
+        <img
+          src={video.image}
+          alt={video.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+          <div className="size-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/40 group-hover:scale-110 group-hover:bg-[#137fec] transition-all duration-300">
+            <span className="material-symbols-outlined">play_arrow</span>
+          </div>
+        </div>
+      </div>
+      <div className="p-5">
+        <h4 className="text-base font-bold mb-2 group-hover:text-[#137fec] transition-colors duration-200 line-clamp-2">
+          {video.title}
+        </h4>
+        <p className="text-slate-500 text-xs leading-relaxed mb-3 line-clamp-3">{video.description}</p>
+        <a href="#" className="text-[#137fec] font-bold text-xs flex items-center gap-1 uppercase tracking-wider hover:gap-3 transition-all duration-300 no-underline">
+          {video.link}
+          <span className="material-symbols-outlined text-sm">arrow_right</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export default function Spotlight() {
   const [visible, setVisible] = useState(false);
   const ref = useRef(null);
@@ -22,19 +55,60 @@ export default function Spotlight() {
   }, []);
 
   return (
-    <section id="student-building" ref={ref} className="py-24 bg-white">
+    <section id="student-building" ref={ref} className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
         <div className={`text-center mb-16 space-y-4 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">Student Spotlight Gallery</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">Explore the vibrant community and success stories at Qodebyte Academy.</p>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            Explore the vibrant community and success stories at Qodebyte Academy.
+          </p>
         </div>
+      </div>
+
+      {/* ── MOBILE: infinite marquee (hidden on md+) ── */}
+      <div className="md:hidden relative mb-16">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        <div className="flex gap-5 px-4 animate-spotlight-marquee" style={{ width: "max-content" }}>
+          {marqueeVideos.map((video, i) => (
+            <SpotlightCard key={`${video.title}-${i}`} video={video} />
+          ))}
+        </div>
+
+        <style>{`
+          @keyframes spotlightMarquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(calc(-33.333%)); }
+          }
+          .animate-spotlight-marquee {
+            animation: spotlightMarquee 14s linear infinite;
+          }
+          .animate-spotlight-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </div>
+
+      {/* ── DESKTOP: original 3-column grid (hidden on mobile) ── */}
+      <div className="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {videos.map((video, i) => (
-            <div key={video.title} style={{ transitionDelay: `${i * 150}ms` }}
-              className={`group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:border-[#137fec] hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div
+              key={video.title}
+              style={{ transitionDelay: `${i * 150}ms` }}
+              className={`group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:border-[#137fec] hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            >
               <div className="h-2 w-full bg-gradient-to-r from-[#137fec] to-blue-600" />
               <div className="relative aspect-video overflow-hidden cursor-pointer">
-                <img src={video.image} alt={video.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img
+                  src={video.image}
+                  alt={video.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                   <div className="size-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/40 group-hover:scale-110 group-hover:bg-[#137fec] transition-all duration-300">
                     <span className="material-symbols-outlined">play_arrow</span>
@@ -42,22 +116,31 @@ export default function Spotlight() {
                 </div>
               </div>
               <div className="p-6">
-                <h4 className="text-lg font-bold mb-2 group-hover:text-[#137fec] transition-colors duration-200">{video.title}</h4>
+                <h4 className="text-lg font-bold mb-2 group-hover:text-[#137fec] transition-colors duration-200">
+                  {video.title}
+                </h4>
                 <p className="text-slate-500 text-sm leading-relaxed mb-4">{video.description}</p>
                 <a href="#" className="text-[#137fec] font-bold text-xs flex items-center gap-1 uppercase tracking-wider hover:gap-3 transition-all duration-300 no-underline">
-                  {video.link} <span className="material-symbols-outlined text-sm">arrow_right</span>
+                  {video.link}
+                  <span className="material-symbols-outlined text-sm">arrow_right</span>
                 </a>
               </div>
             </div>
           ))}
         </div>
-        <div className={`flex justify-center transition-all duration-700 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <a href="https://wa.me/2349125771177" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-[#137fec] text-white px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-[#137fec]/30 hover:scale-[1.02] hover:brightness-110 transition-all duration-300 no-underline">
-            <span className="material-symbols-outlined">chat</span>
-            👉 Chat on WhatsApp to Enroll
-          </a>
-        </div>
+      </div>
+
+      {/* CTA button — always visible */}
+      <div className={`flex justify-center px-4 transition-all duration-700 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <a
+          href="https://wa.me/2349125771177"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 bg-[#137fec] text-white px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-[#137fec]/30 hover:scale-[1.02] hover:brightness-110 transition-all duration-300 no-underline"
+        >
+          <span className="material-symbols-outlined">chat</span>
+          👉 Chat on WhatsApp to Enroll
+        </a>
       </div>
     </section>
   );
